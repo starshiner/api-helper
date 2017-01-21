@@ -6,11 +6,23 @@ chrome.webRequest.onBeforeRequest.addListener(
     ["blocking"]
 );
 
+chrome.webRequest.onCompleted.addListener(dealInject,{ urls: ["<all_urls>"] })
+
 function dealRequest(detail) {
   var localData = getData(localStorageKey);
-  if (localData[detail.url.split('?')[0]]) {
-    return { redirectUrl: localData[detail.url.split('?')[0]] + (detail.url.split('?')[1] ? '?' + detail.url.split('?')[1] : '') };
+  var currentURL = detail.url.split('?')[0];
+  var queryString = detail.url.split('?')[1];
+  if (localData[currentURL]) {
+    var redirectUrl = localData[currentURL] + (queryString ? '?' + queryString : '')
+    return { redirectUrl: redirectUrl };
   }
+}
+
+function dealInject (detail) {
+  chrome.tabs.executeScript(null, {
+    file: 'inject.js',
+    allFrames: false
+  });
 }
 
 function getData (key) {
