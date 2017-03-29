@@ -19,10 +19,11 @@ function dealRequest(detail) {
 }
 
 function dealInject (detail) {
-  chrome.tabs.executeScript(null, {
-    file: 'inject.js',
-    allFrames: false
-  });
+  // chrome.tabs.executeScript(null, {
+  //   file: 'inject.js',
+  //   allFrames: false,
+  //   run_at : "document_start"
+  // });
 }
 
 function getData (key) {

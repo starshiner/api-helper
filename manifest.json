@@ -14,8 +14,17 @@
         "webRequestBlocking",
         "tabs"
     ],
+    "content_scripts" : [{
+        "matches" : ["http://*/*"],
+        "js" : ["inject.js"],
+        "all_frames" : true ,
+        "run_at" : "document_start"
+    }],
     "background": {
         "scripts": ["background.js"]
     },
-    "options_page": "options.html"
+    "options_page": "options.html",
+    "web_accessible_resources": [
+        "inline.js"
+    ]
 }
